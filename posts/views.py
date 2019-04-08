@@ -30,9 +30,19 @@ def create(request):
         form = PostForm()
     # 3. form 을 담아서 create.html을 보내준다.
     # 8. 사용자가 입력한 데이터는 form에 담아진 상태로 다시 form을 담아서 create.html을 보내준다.
-    return render(request, 'posts/create.html', {'form':form})
+    return render(request, 'posts/form.html', {'form':form})
         
-        
+def update(request,id):
+    post = Post.objects.get(id=id)
+    if request.method == "POST":
+        form = PostForm(request.POST, instance=post)
+        if form.is_valid():
+            form.save()
+            return redirect("posts:list")
+    else:
+        form = PostForm(instance=post)
+    return render(request, 'posts/form.html',{'form':form})
+    
         
         
         
