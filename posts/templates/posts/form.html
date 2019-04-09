@@ -5,7 +5,9 @@
     <form action="" method='post' enctype="multipart/form-data">
         {% csrf_token %}
         {% bootstrap_form post_form %}
-        {% bootstrap_form image_form %}
+        {% if image_form %}
+            {% bootstrap_form image_form %}
+        {% endif%}
         <input type="submit">
     </form>
 {% endblock %}

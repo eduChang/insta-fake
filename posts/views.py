@@ -21,9 +21,13 @@ def create(request):
         if post_form.is_valid():
             # 12. 적절한 데이터가 들어온다. 데이터를 저장하고 list페이지로 리다이렉트!!
             post = post_form.save()
-            image = image_form.save(commit=False)
-            image.post = post
-            image.save()
+            for image in request.FILES.getlist('file'):
+                request.FILES['file'] = image
+                image_form = ImageForm(request.POST, request.FILES)
+                if image_form.is_valid():
+                    image = image_form.save(commit=False)
+                    image.post = post
+                    image.save()
             
             return redirect("posts:list")
         else:
@@ -41,13 +45,13 @@ def create(request):
 def update(request,id):
     post = Post.objects.get(id=id)
     if request.method == "POST":
-        form = PostForm(request.POST, instance=post)
-        if form.is_valid():
-            form.save()
+        post_form = PostForm(request.POST, instance=post)
+        if post_form.is_valid():
+            post_form.save()
             return redirect("posts:list")
     else:
-        form = PostForm(instance=post)
-    return render(request, 'posts/form.html',{'form':form})
+        post_form = PostForm(instance=post)
+    return render(request, 'posts/form.html',{'post_form':post_form})
     
 def delete(request,id):
     post = Post.objects.get(id=id)
