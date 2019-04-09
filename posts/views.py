@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from .forms import PostForm
+from .forms import PostForm, ImageForm
 from .models import Post
 
 # Create your views here.
@@ -14,12 +14,17 @@ def create(request):
     if request.method == "POST":
         # 5. post방식으로 저장요청을 받고, 데이터를 받아 PostForm에 넣어서 인스턴스화 한다.
         # 10. 5번과 같음
-        form = PostForm(request.POST, request.FILES)
+        post_form = PostForm(request.POST)
+        image_form = ImageForm(request.POST,request.FILES)
         # 6. 데이터 검증을 한다.
         # 11. 6번과 같음
-        if form.is_valid():
+        if post_form.is_valid():
             # 12. 적절한 데이터가 들어온다. 데이터를 저장하고 list페이지로 리다이렉트!!
-            form.save()
+            post = post_form.save()
+            image = image_form.save(commit=False)
+            image.post = post
+            image.save()
+            
             return redirect("posts:list")
         else:
             # 7. 적절하지 않은 데이터가 들어온다.
@@ -27,10 +32,11 @@ def create(request):
             
     else:
         # 2. PostForm을 인스턴스화 시켜서 form에 저장한다.
-        form = PostForm()
+        post_form = PostForm()
+        image_form = ImageForm()
     # 3. form 을 담아서 create.html을 보내준다.
     # 8. 사용자가 입력한 데이터는 form에 담아진 상태로 다시 form을 담아서 create.html을 보내준다.
-    return render(request, 'posts/form.html', {'form':form})
+    return render(request, 'posts/form.html', {'post_form':post_form,"image_form":image_form})
         
 def update(request,id):
     post = Post.objects.get(id=id)
