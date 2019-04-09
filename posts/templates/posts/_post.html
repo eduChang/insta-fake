@@ -1,5 +1,10 @@
 <div class="card">
-  <img src="..." class="card-img-top" alt="...">
+  {% if post.image %}
+    <img src="{{post.image.url}}" class="card-img-top" alt="...">
+  {% else %}
+    <img src="..." class="card-img-top" alt="...">
+  {% endif %}
+  
   <div class="card-body">
     <p class="card-text">{{post.content}}</p>
     <a href="{% url 'posts:update' post.id %}" class="btn btn-warning">수정</a>

@@ -14,7 +14,7 @@ def create(request):
     if request.method == "POST":
         # 5. post방식으로 저장요청을 받고, 데이터를 받아 PostForm에 넣어서 인스턴스화 한다.
         # 10. 5번과 같음
-        form = PostForm(request.POST)
+        form = PostForm(request.POST, request.FILES)
         # 6. 데이터 검증을 한다.
         # 11. 6번과 같음
         if form.is_valid():
