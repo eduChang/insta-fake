@@ -1,12 +1,14 @@
 from django.shortcuts import render,redirect
 from .forms import PostForm, ImageForm
 from .models import Post
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def list(request):
     posts = Post.objects.all()
     return render(request, 'posts/list.html',{'posts':posts})
     
+@login_required    
 def create(request):
     # 1. get 방식으로 데이터를 입력할 form을 요청한다.
     # 4. 사용자가 데이터를 입력해서 post방식으로 요청한다.
