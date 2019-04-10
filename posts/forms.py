@@ -14,4 +14,3 @@ class ImageForm(forms.ModelForm):
         widgets = {
             'file' : forms.FileInput(attrs={'multiple': True})
         }
-        
