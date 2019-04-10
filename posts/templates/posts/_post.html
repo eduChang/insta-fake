@@ -1,4 +1,7 @@
-<div class="card">
+<div class="card my-5">
+  <div class="card-header">
+    <h5 class="card-text">{{post.user}}</h5>
+  </div>
   {% if post.image_set %}
     <div id="post{{post.id}}" class="carousel slide" data-ride="carousel">
       <div class="carousel-inner">
@@ -23,7 +26,9 @@
   
   <div class="card-body">
     <p class="card-text">{{post.content}}</p>
-    <a href="{% url 'posts:update' post.id %}" class="btn btn-warning">수정</a>
-    <a href="{% url 'posts:delete' post.id %}" class="btn btn-danger">삭제</a>
+    {% if post.user == user %}
+      <a href="{% url 'posts:update' post.id %}" class="btn btn-warning">수정</a>
+      <a href="{% url 'posts:delete' post.id %}" class="btn btn-danger">삭제</a>
+    {% endif %}
   </div>
 </div>
