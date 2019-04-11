@@ -36,6 +36,9 @@
   <div class="card-body">
     {% for comment in post.comment_set.all %}
       <p class="card-text"><strong>{{comment.user}}</strong> {{comment.content}}</p>
+      {% if comment.user == user %}
+        <a href="{% url 'posts:comment_delete' post.id comment.id %}" class="btn btn-danger">삭제</a>
+      {% endif %}
     {% empty%}
       <p class="card-text">댓글이 없어요 ㅠㅠㅠ</p>
     {% endfor %}
