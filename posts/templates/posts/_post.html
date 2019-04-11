@@ -31,4 +31,12 @@
       <a href="{% url 'posts:delete' post.id %}" class="btn btn-danger">삭제</a>
     {% endif %}
   </div>
+  <div class="card-body">
+    <form action="{% url 'posts:comment_create' post.id %}" method='post'>
+      {% csrf_token %}
+      {{comment_form.content}}
+      <input type="submit"/>
+    </form>
+  
+  </div>
 </div>

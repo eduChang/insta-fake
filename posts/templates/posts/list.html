@@ -1,7 +1,11 @@
 {% extends 'base.html' %}
 
 {% block body %}
-    {% for post in posts %}
-        {% include 'posts/_post.html' %}
-    {% endfor%}
+    <div class="row">
+        <div class="col-6">
+            {% for post in posts %}
+                {% include 'posts/_post.html' %}
+            {% endfor%}
+        </div>
+    </div>
 {% endblock %}
