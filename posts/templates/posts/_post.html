@@ -31,12 +31,21 @@
       <a href="{% url 'posts:delete' post.id %}" class="btn btn-danger">삭제</a>
     {% endif %}
   </div>
+  
+  <!--댓글을 보여주는 부분-->
+  <div class="card-body">
+    {% for comment in post.comment_set.all %}
+      <p class="card-text"><strong>{{comment.user}}</strong> {{comment.content}}</p>
+    {% empty%}
+      <p class="card-text">댓글이 없어요 ㅠㅠㅠ</p>
+    {% endfor %}
+  </div>
+  
   <div class="card-body">
     <form action="{% url 'posts:comment_create' post.id %}" method='post'>
       {% csrf_token %}
       {{comment_form.content}}
       <input type="submit"/>
     </form>
-  
   </div>
 </div>
