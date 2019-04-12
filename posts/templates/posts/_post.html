@@ -25,7 +25,15 @@
   {% endif %}
   
   <div class="card-body">
-    <p class="card-text">{{post.content}}</p>
+    <!-- 좋아요 버튼 시작 -->
+    {% if user in post.likes.all %}
+      <a href="{% url 'posts:like' post.id %}"><i class="fas fa-heart" style="color:#ed4956"></i></a>
+    {% else %}
+      <a href="{% url 'posts:like' post.id %}"><i class="far fa-heart" style="color:black"></i></a>
+    {% endif %}
+    <!-- 좋아요 버튼 끝-->
+    <p class="card-text"><strong>{{post.user}}</strong> {{post.content}}</p>
+    <p class="card-text">좋아요 {{post.likes.count}}개</p>
     {% if post.user == user %}
       <a href="{% url 'posts:update' post.id %}" class="btn btn-warning">수정</a>
       <a href="{% url 'posts:delete' post.id %}" class="btn btn-danger">삭제</a>

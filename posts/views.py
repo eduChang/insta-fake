@@ -88,7 +88,46 @@ def comment_delete(request, post_id, comment_id):
     if comment.user == request.user:
         comment.delete()
     return redirect('posts:list')
-        
-        
-        
-        
+    
+@login_required        
+def like(request, id):
+    user = request.user
+    post = Post.objects.get(id=id)
+    
+    # 사용자가 좋아요를 눌렀다면
+    if user in post.likes.all():
+        post.likes.remove(user)
+    # 사용자가 좋아요를 누르지 않았다면
+    else:
+        post.likes.add(user)
+    
+    return redirect('posts:list')
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    # 과거의 코드
+    # user = request.user
+    # post = Post.objects.get(id=id)
+    
+    # likes = post.like_set.all()
+    # check = 0
+    # for like in likes:
+    #     if user == like.user:
+    #         check = 1
+    #         like_post = like
+            
+    # if check == 1:
+    #     like_post.delete()
+    # else:
+    #     like = Like(user=user, post=post)
+    #     like.save()
+            
+    # return redirect('posts:list')
+    
+   

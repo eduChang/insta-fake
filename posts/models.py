@@ -8,7 +8,8 @@ class Post(models.Model):
     content = models.CharField(max_length=100)
     # image = models.ImageField(blank=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-        
+    likes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="like_post_set", blank=True)
+    
 class Image(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     file = ProcessedImageField(
@@ -24,8 +25,10 @@ class Comment(models.Model):
     content = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
 
-    
-    
+# class Like(models.Model):
+#     post = models.ForeignKey(Post, on_delete=models.CASCADE)
+#     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+
     
     
     
