@@ -1,6 +1,6 @@
 <div class="card my-5">
   <div class="card-header">
-    <h5 class="card-text">{{post.user}}</h5>
+    <a href="{% url 'accounts:user_page' post.user.id %}" style="color:black"><h5 class="card-text">{{post.user}}</h5></a>
   </div>
   {% if post.image_set %}
     <div id="post{{post.id}}" class="carousel slide" data-ride="carousel">

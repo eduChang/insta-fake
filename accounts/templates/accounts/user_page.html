@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <!--사용자 정보 출력 시작-->
+    <div class="row">
+        <div class="col-4">
+            <!--프로필이미지-->
+        </div>
+        <div class="col-8">
+            <!--유저 정보-->
+            <h1>{{user_info.username}}</h1>
+            {% if user != user_info %}
+                {% if user_info in user.followings.all %}
+                    <a href="{% url 'accounts:follow' user_info.id %}" class="btn btn-light">팔로잉</a>
+                {% else %}
+                    <a href="{% url 'accounts:follow' user_info.id %}" class="btn btn-primary">팔로우</a>
+                {% endif %}
+            {% endif %}
+            <h5>팔로잉 : {{user_info.followings.count}}</h5>
+            <h5>팔로워 : {{user_info.followers.count}}</h5>
+        </div>
+    </div>
+    <!--사용자 정보 출력 끝-->
+    
+    <!--작성글 출력 시작-->
+    <div class="card-columns">
+        {% for post in user_info.post_set.all %}
+            {% include 'posts/_post.html' %}
+        {% endfor %}
+    </div>
+    <!--작성글 출력 끝-->
+{% endblock %}

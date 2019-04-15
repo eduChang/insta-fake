@@ -25,7 +25,7 @@
                         <a class="nav-link" href="{% url 'posts:create' %}">New</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">MyPage</a>
+                        <a class="nav-link" href="{% url 'accounts:user_page' user.id %}">MyPage</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'accounts:logout' %}">Logout</a>
