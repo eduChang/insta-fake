@@ -17,6 +17,8 @@
                     {% else %}
                         <a href="{% url 'accounts:follow' user_info.id %}" class="btn btn-primary">팔로우</a>
                     {% endif %}
+                {% else %}
+                    <a href="{% url 'accounts:edit_profile' user_info.id %}" class="btn btn-light">프로필수정</a>
                 {% endif %}
             </div>
             <div class="row d-flex justify-content-start">
