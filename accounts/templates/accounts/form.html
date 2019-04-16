@@ -9,7 +9,7 @@
     {% else %}
         <h1>프로필수정</h1>
     {% endif %}
-    <form method='post'>
+    <form method='post' enctype="multipart/form-data">
         {% csrf_token %} 
         {% bootstrap_form form %}
         <input type="submit">
