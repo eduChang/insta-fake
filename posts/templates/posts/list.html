@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
 
 {% block body %}
+    {% if request.resolver_match.url_name == "hashtag" %}
+        <h2>{{hashtag.content}}</h2>
+    {% endif %}
     <div class="row">
         <div class="col-6">
             {% for post in posts %}

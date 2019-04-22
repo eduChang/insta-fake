@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from .forms import PostForm, ImageForm, CommentForm
 from .models import Post, Comment, Hashtag
 from django.contrib.auth.decorators import login_required
@@ -60,7 +60,7 @@ def create(request):
 
 @login_required        
 def update(request,id):
-    post = Post.objects.get(id=id)
+    post = get_object_or_404(Post, id=id)
     if post.user == request.user:
         if request.method == "POST":
             post_form = PostForm(request.POST, instance=post)
@@ -98,7 +98,7 @@ def comment_create(request, post_id):
         comment = comment_form.save(commit=False)
         comment.user = request.user
         comment.post = Post.objects.get(id=post_id)
-        comment.save()
+        comment_form.save()
         return redirect("posts:list")
 
 @login_required
@@ -121,15 +121,6 @@ def like(request, id):
         post.likes.add(user)
     
     return redirect('posts:list')
-    
-    
-    
-    
-    
-    
-    
-    
-    
     # 과거의 코드
     # user = request.user
     # post = Post.objects.get(id=id)
@@ -149,4 +140,16 @@ def like(request, id):
             
     # return redirect('posts:list')
     
-   
+def hashtag(request,id):
+    hashtag = Hashtag.objects.get(id=id)
+    posts = hashtag.post_set.all()
+    comment_form = CommentForm()
+    
+    return render(request, 'posts/list.html', {"posts":posts, "comment_form":comment_form, "hashtag":hashtag})
+    
+    
+    
+    
+    
+    
+    
