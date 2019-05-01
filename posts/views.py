@@ -3,7 +3,7 @@ from .forms import PostForm, ImageForm, CommentForm
 from .models import Post, Comment, Hashtag
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
-
+from django.http import JsonResponse
 # Create your views here.
 def list(request):
     posts = Post.objects.all()
@@ -116,11 +116,14 @@ def like(request, id):
     # 사용자가 좋아요를 눌렀다면
     if user in post.likes.all():
         post.likes.remove(user)
+        is_like = False
     # 사용자가 좋아요를 누르지 않았다면
     else:
         post.likes.add(user)
+        is_like = True
     
-    return redirect('posts:list')
+    return JsonResponse({"is_like":is_like, "like_count":post.likes.count()})
+    # return redirect('posts:list')
     # 과거의 코드
     # user = request.user
     # post = Post.objects.get(id=id)

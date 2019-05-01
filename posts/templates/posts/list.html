@@ -11,4 +11,30 @@
             {% endfor%}
         </div>
     </div>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script type="text/javascript">
+        let likeBtnList = document.querySelectorAll('.like-btn')
+        for(const likeBtn of likeBtnList){
+            likeBtn.addEventListener('click',(e)=>{
+                const post_id = e.target.dataset.id
+                axios.get(`/posts/${post_id}/like/`)
+                .then(function(response){
+                    if(response.data.is_like){
+                        e.target.classList.remove('far')
+                        e.target.classList.add('fas')
+                        e.target.style.color = "#ed4956"
+                    } else{
+                        e.target.classList.remove('fas')
+                        e.target.classList.add('far')
+                        e.target.style.color = "black"
+                    }
+                    console.log(response.data.like_count)
+                    document.querySelector(`#like-count-${post_id}`).innerHTML = response.data.like_count
+                })
+                .catch(function(error){
+                    console.log(error)
+                })
+            })
+        }
+    </script>
 {% endblock %}

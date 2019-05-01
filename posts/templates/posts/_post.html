@@ -29,13 +29,13 @@
   <div class="card-body">
     <!-- 좋아요 버튼 시작 -->
     {% if user in post.likes.all %}
-      <a href="{% url 'posts:like' post.id %}"><i class="fas fa-heart" style="color:#ed4956"></i></a>
+      <i class="like-btn fas fa-heart" style="color:#ed4956" data-id="{{post.id}}"></i>
     {% else %}
-      <a href="{% url 'posts:like' post.id %}"><i class="far fa-heart" style="color:black"></i></a>
+      <i class="like-btn far fa-heart" style="color:black" data-id="{{post.id}}"></i>
     {% endif %}
     <!-- 좋아요 버튼 끝-->
     <p class="card-text"><strong>{{post.user}}</strong> {{post|hashtag_link|safe}}</p>
-    <p class="card-text">좋아요 {{post.likes.count}}개</p>
+    <p class="card-text">좋아요 <span id="like-count-{{post.id}}">{{post.likes.count}}</span>개</p>
     {% if post.user == user %}
       <a href="{% url 'posts:update' post.id %}" class="btn btn-warning">수정</a>
       <a href="{% url 'posts:delete' post.id %}" class="btn btn-danger">삭제</a>
